@@ -198,7 +198,7 @@ class AiiDAMLIPStatsViewer(ipw.HTML):
     """
 
     def __init__(self, node: SinglefileData, **kwargs):
-        super().__init__(value=DEFAULT_STYLE, **kwargs)
+        super().__init__(value=self.DEFAULT_STYLE, **kwargs)
 
         with node.open(None, "r") as file:
             header = next(file, "").strip("#")
