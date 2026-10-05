@@ -28,7 +28,7 @@ RUN sed -i '/aiida-core/d' /opt/requirements.txt
 # ``--pre`` allows alpha pre-releases if needed.
 RUN pip install --no-cache-dir --no-user --pre \
         "git+https://github.com/stfc/aiida-mlip.git" \
-        "git+https://github.com/stfc/alc-aiidalab-widgets.git@add-parameters" \
+        "git+https://github.com/stfc/alc-aiidalab-widgets.git" \
         "janus-core[mace]" \
         "backports.tarfile" \
         "aiida-core[rest]" && \

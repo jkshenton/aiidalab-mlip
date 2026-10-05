@@ -75,7 +75,7 @@ class HistoryAppView(ipw.VBox):
 
         self.guide = ipw.HTML(
             """
-            <h3>ChemShell Process History</h3>
+            <h3>AiiDA-MLIP Process History</h3>
             <p>
             Search through past processes and visualise inputs, outputs and
             provenance relationships.
