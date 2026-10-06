@@ -246,7 +246,7 @@ Try: verdi code create core.code.installed --config janus.yml""")
 
     def _try_load_model(self, arch: str) -> ModelData | None:
 
-        typ = self.model_type._titles[str(self.model_type.selected_index)]
+        typ = self.model_type.get_title(self.model_type.selected_index)
 
         match typ:
             case "From URI":
