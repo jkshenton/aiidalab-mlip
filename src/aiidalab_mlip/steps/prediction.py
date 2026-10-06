@@ -112,7 +112,7 @@ class PredictionWizardStep(ipw.VBox, awb.WizardAppWidgetStep):
                 model_uri = (
                     "https://github.com/stfc/janus-core/raw/main/tests/models/mace_mp_small.model"
                 )
-                model = ModelData.from_uri(model_uri, architecture="mace_mp", cache_dir="mlips")
+                model = ModelData.from_uri(model_uri, architecture="mace_mp", cache_dir=Path.home() / ".cache" / "mlips")
 
                 # Build calculation based on type
                 if calc_type == "geometry_opt":
