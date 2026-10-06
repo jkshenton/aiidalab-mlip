@@ -107,6 +107,18 @@ class VibrationalModesViewWidget(ipw.VBox):
 class SummaryViewer(ipw.VBox):
     def __init__(self, node, **kwargs) -> None:
 
+        if not hasattr(node, "outputs") or "results_dict" not in node.outputs:
+            super().__init__(
+                [
+                    ipw.HTML(
+                        f"<h3>Process: {node.process_label or node.pk}</h3>"
+                        f"<p>State: <b>{getattr(node.process_state, 'value', str(node.process_state))}</b> | Exit status: {node.exit_status}</p>"
+                        f"<p><i>No results_dict output available (the calculation may not have finished successfully).</i></p>"
+                    )
+                ]
+            )
+            return
+
         results = node.outputs.results_dict.get_dict()
 
         textbox = ipw.HTML()
