@@ -109,7 +109,13 @@ class RunWizardStep(WizardStep):
 
                 case "Single Point":
                     builder = Singlepoint.get_builder()
-                    builder.properties = orm.List(list(task_parameters["properties"]))
+                    props = task_parameters["properties"]
+                    if isinstance(props, (list, tuple, set)):
+                        builder.properties = orm.Str(",".join(props))
+                    elif isinstance(props, str):
+                        builder.properties = orm.Str(props)
+                    else:
+                        builder.properties = orm.Str(str(props))
                 case "Molecular Dynamics":
                     builder = MD.get_builder()
                     builder.ensemble = orm.Str(task_parameters.pop("ensemble"))
