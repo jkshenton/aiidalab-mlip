@@ -1,5 +1,4 @@
 """Select tasks widget."""
-from sympy.physics.units import mi
 
 import random
 from operator import not_
@@ -485,7 +484,7 @@ class PhononTask(ParameterStep):
             ),
             "n_qpoints": ipw.BoundedIntText(
                 description="N Q-Points:", help="Number of q-points to sample.",
-                default=10,
+                default=51,
                 min=1,
             ),
             "displacement": ipw.BoundedFloatText(
@@ -518,7 +517,14 @@ class PhononTask(ParameterStep):
             info="Phonon calculation",
             widgets=widgets,
             default_args={
-                "a": {}
+                "default": {
+                    "n_qpoints": 51,
+                    "supercell": "1",
+                    "ops": {"dos", "pdos", "bands"},
+                    "displacement": 0.01,
+                    "symmetrize": True,
+                    "no_hdf5": True,
+                }
             },
             submittable=False,
         )

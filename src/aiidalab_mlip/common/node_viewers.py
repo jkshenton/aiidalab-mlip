@@ -21,6 +21,7 @@ from aiidalab_widgets_base.viewers import AIIDA_VIEWER_MAPPING, DictViewer
 from alc_aiidalab_widgets.types import CallbackDict
 from alc_aiidalab_widgets.widgets import Status, StructureViewWidget
 from alc_aiidalab_widgets.widgets.tables import GenericArrayDataTableWidget
+from alc_aiidalab_widgets.widgets.vib_modes import VibrationalModesViewWidget
 from ase import Atoms
 from IPython.display import display
 from traitlets import Instance, observe
@@ -57,6 +58,7 @@ Finished: {node.mtime}
         except NotExistentAttributeError:
             textbox.value = "<br>".join(text).replace("\n", "<br>")
             super().__init__(children=children, **kwargs)
+            return
 
         # Display energy
         if (energy := self._get_dict_ci(results.get("info", {}), "energy")) is not None:
@@ -215,18 +217,14 @@ class CustomAiidaNodeViewWidget(ipw.VBox):
                         header=["Frequency", *(f"Atom_{i}" for i, _ in enumerate(data[1:], 1))],
                     )
 
-            # case SinglefileData(filename="aiida-force_constants.hdf5"):
-            #     return ipw.HTML("Hello")
+            # Don't currently handle this type of file.
+            case SinglefileData(filename="aiida-force_constants.hdf5"):
+                ipw.HTML(f"Cannot currently show contents of {node.filename}")
 
             case SinglefileData(filename="aiida-auto_bands.yml.xz"):
-                viewer = ipw.Output()
-                viewer.append_stdout(f"{ph.get_band_structure_dict()}")
-
-                # with node.open(None, "rb") as file, LZMAFile(file, "r") as decompress:
-                #     d = yaml.safe_load(decompress)
-                #     # viewer = ipw.Output()
-                #     # viewer.append_stdout(f"{d}")
-                # return DictViewer(Dict(d))
+                return VibrationalModesViewWidget.from_phonopy_yaml(
+                    node, layout=ipw.Layout(width="100%", min_height="10cm")
+                )
 
             case SinglefileData() if node.filename.endswith((".yaml", ".yml")):
                 with node.open(None, "r") as file:
