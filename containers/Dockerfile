@@ -12,7 +12,7 @@
 #   podman run -it --rm -p 8888:8888 -v "$HOME":/home/jovyan aiidalab-mlip:latest
 #   (or use ./containers/startup.sh)
 
-FROM ghcr.io/stfc/alc-ux/base:py310
+FROM aiidalab/full-stack:edge
 
 USER root
 
@@ -27,16 +27,16 @@ RUN sed -i '/aiida-core/d' /opt/requirements.txt
 # janus-core with MACE support, backports.tarfile, and aiida-core[rest] (for verdi restapi).
 # ``--pre`` allows alpha pre-releases if needed.
 RUN pip install --no-cache-dir --no-user --pre \
-        "git+https://github.com/stfc/aiida-mlip.git" \
-        "git+https://github.com/stfc/alc-aiidalab-widgets.git" \
-        "janus-core[mace]" \
-        "backports.tarfile" \
-        "aiida-core[rest]" && \
+    "git+https://github.com/stfc/aiida-mlip.git" \
+    "git+https://github.com/stfc/alc-aiidalab-widgets.git" \
+    "janus-core[mace]" \
+    "backports.tarfile" \
+    "aiida-core[rest]" \
+    && \
     F="$(find /opt/conda -name 'layouts.py' -path '*/alc_aiidalab_widgets/*')" && \
     if [ -n "$F" ] && ! grep -q 'from __future__ import annotations' "$F"; then \
         sed -i '1s|^|from __future__ import annotations\n|' "$F"; \
-    fi && \
-    jupyter serverextension disable --sys-prefix jupyter_lsp
+    fi
 
 # ---------------------------------------------------------------------------
 # The AiiDAlab app

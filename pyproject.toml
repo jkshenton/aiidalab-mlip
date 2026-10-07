@@ -20,19 +20,11 @@ classifiers = [
 ]
 license = {text = "BSD-3-Clause"}
 dependencies = [
-    "aiidalab>=21.09.0",
+    "aiidalab>=26.09.0",
     "aiida-mlip",
     "aiidalab-widgets-base",
-    "traitlets~=5.0",
-    "pydantic>=2.6,<3",
-    "ipywidgets==7.7.4",
+    "ipywidgets~=8.0",
     "ipython==8.10.0",
-    "psycopg==3.2.3",
-    "cryptography<46",
-    "importlib-metadata==6.11.0",
-    "jedi==0.18.2",
-    "psutil==5.9.8",
-    "nglview",
     "alc-aiidalab-widgets",
     "pyyaml",
 ]
