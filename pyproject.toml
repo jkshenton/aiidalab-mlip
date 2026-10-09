@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiidalab-mlip"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     {name = "Jessica Gould"},
     {name = "Jacob Wilkins", email = "jacob.wilkins@stfc.ac.uk"}
