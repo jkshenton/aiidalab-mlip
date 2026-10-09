@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-import aiidalab_widgets_base as awb
 import ipywidgets as ipw
 from aiida import orm
 from aiida.orm import Code, QueryBuilder
@@ -232,7 +231,7 @@ Try: verdi code create core.code.installed --config janus.yml""")
             model_uri = model_pth.as_uri()
 
         try:
-            model_str = ModelData.from_uri(model_uri, architecture=arch, cache_dir="mlips")
+            model_str = ModelData.from_uri(model_uri, architecture=arch)
             model_str.label = f"{arch}:{model_uri}"
             self.model.arch = arch
             self.ok(f"Loaded model from {model_uri}.")
@@ -246,7 +245,7 @@ Try: verdi code create core.code.installed --config janus.yml""")
 
     def _try_load_model(self, arch: str) -> ModelData | None:
 
-        typ = self.model_type._titles[str(self.model_type.selected_index)]
+        typ = self.model_type.get_title(self.model_type.selected_index)
 
         match typ:
             case "From URI":
